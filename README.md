@@ -47,3 +47,26 @@ These are preliminary measurements from a container-based lab. More repeated tes
 ## Safety
 
 Review the configuration before deployment. Do not expose lab management interfaces or MongoDB publicly. Do not commit passwords, subscriber secrets, private keys or tokens.
+
+## Measurement Results and Graphs
+
+### HTTP Response Time
+![HTTP Response Time](results/graphs/http-response-time.png)
+
+### TCP Receiver Throughput
+![TCP Receiver Throughput](results/graphs/tcp-throughput.png)
+
+### UDP Receiver Throughput
+![UDP Receiver Throughput](results/graphs/udp-throughput.png)
+
+### UDP Jitter
+![UDP Jitter](results/graphs/udp-jitter.png)
+
+### UDP Packet Loss
+![UDP Packet Loss](results/graphs/udp-packet-loss.png)
+
+Measurement data: `results/measurement-data.csv`
+
+Regenerate charts with `.venv/bin/python scripts/plot_results.py`.
+
+Note: These are preliminary results; additional repeated tests are needed.
