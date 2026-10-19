@@ -1,0 +1,20 @@
+Scenario B — N3 GTP-U Capture Summary
+
+Capture file: captures/scenario-b-n3-gtpu.pcap
+gNB outer IP: 172.19.0.10
+UPF outer IP: 172.19.0.14
+N3 transport: UDP port 2152 (GTP-U)
+UE inner IP: 10.45.0.2
+Application server IP: 172.19.0.20
+
+Observed:
+- 40 packets in the saved capture.
+- GTP-U traffic in both directions between gNB and UPF.
+- Decoded inner IP addresses include the UE and application server.
+- Three HTTP requests returned HTTP 200 OK.
+- Measured HTTP response times: 1.451 ms, 0.299 ms, and 0.223 ms.
+- Mean of these three response times: approximately 0.658 ms.
+
+Note: The three HTTP timings are preliminary measurements, not a
+controlled performance benchmark. Further repetitions and traffic
+measurements are required for the full project evaluation.

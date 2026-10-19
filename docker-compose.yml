@@ -1,0 +1,148 @@
+services:
+  nrf:
+    image: ghcr.io/borjis131/nrf:v2.7.6
+    container_name: scenario-b-nrf
+    restart: unless-stopped
+    volumes:
+      - ./config/nrf.yaml:/etc/open5gs/default/nrf.yaml:ro
+    networks:
+      - core-net
+
+  amf:
+    image: ghcr.io/borjis131/amf:v2.7.6
+    container_name: scenario-b-amf
+    restart: unless-stopped
+    depends_on:
+      - nrf
+    volumes:
+      - ./config/amf.yaml:/etc/open5gs/default/amf.yaml:ro
+    networks:
+      - core-net
+
+  upf:
+    image: ghcr.io/borjis131/upf:v2.7.6
+    container_name: scenario-b-upf
+    restart: unless-stopped
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    volumes:
+      - ./config/upf.yaml:/etc/open5gs/default/upf.yaml:ro
+    networks:
+        core-net:
+          ipv4_address: 172.19.0.14
+  smf:
+    image: ghcr.io/borjis131/smf:v2.7.6
+    container_name: scenario-b-smf
+    restart: unless-stopped
+    depends_on:
+      - nrf
+    volumes:
+      - ./config/smf.yaml:/etc/open5gs/default/smf.yaml:ro
+    networks:
+       core-net:
+        ipv4_address: 172.19.0.13
+
+  gnb:
+    image: free5gc/ueransim:latest
+    container_name: scenario-b-gnb
+    restart: unless-stopped
+    depends_on:
+      - amf
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    volumes:
+      - ./config/gnb.yaml:/ueransim/config/gnb.yaml:ro
+    command: ["/ueransim/nr-gnb", "-c", "/ueransim/config/gnb.yaml"]
+    networks:
+      core-net:
+        ipv4_address: 172.19.0.10
+
+
+
+
+
+  udm:
+    image: ghcr.io/borjis131/udm:v2.7.6
+    container_name: scenario-b-udm
+    restart: unless-stopped
+    depends_on:
+      - nrf
+      - udr
+    volumes:
+      - ./config/udm.yaml:/etc/open5gs/default/udm.yaml:ro
+    networks:
+       core-net:
+         ipv4_address: 172.19.0.11
+
+  ausf:
+    image: ghcr.io/borjis131/ausf:v2.7.6
+    container_name: scenario-b-ausf
+    restart: unless-stopped
+    depends_on:
+      - nrf
+      - udr
+    volumes:
+      - ./config/ausf.yaml:/etc/open5gs/default/ausf.yaml:ro
+    networks:
+      - core-net
+
+  udr:
+    image: ghcr.io/borjis131/udr:v2.7.6
+    container_name: scenario-b-udr
+    restart: unless-stopped
+    depends_on:
+      - nrf
+      - mongodb
+    volumes:
+      - ./config/udr.yaml:/etc/open5gs/default/udr.yaml:ro
+    networks:
+      - core-net
+
+  mongodb:
+    image: mongo:7
+    container_name: scenario-b-mongodb
+    restart: unless-stopped
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      core-net:
+        aliases:
+          - db.open5gs.org
+
+  webui:
+    image: scenario-b-webui:v2.7.6
+    container_name: scenario-b-webui
+    restart: unless-stopped
+    environment:
+      DB_URI: mongodb://db.open5gs.org/open5gs
+      PORT: "9999"
+      HOSTNAME: 0.0.0.0
+      NODE_ENV: dev
+    depends_on:
+      - mongodb
+    ports:
+      - "9999:9999"
+    networks:
+      - core-net
+  pcf:
+    image: ghcr.io/borjis131/pcf:v2.7.6
+    container_name: scenario-b-pcf
+    restart: unless-stopped
+    depends_on:
+      - nrf
+      - mongodb
+    volumes:
+      - ./config/pcf.yaml:/etc/open5gs/default/pcf.yaml:ro
+    networks:
+      - core-net
+
+networks:
+  core-net:
+    driver: bridge
+
+volumes:
+  mongodb-data:

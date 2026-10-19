@@ -1,0 +1,91 @@
+Scenario B — Preliminary Performance Results
+
+TCP test 1:
+Duration: 5 seconds
+Sender throughput: 1.16 Gbit/s
+Receiver throughput: 1.15 Gbit/s
+TCP retransmissions: 2363
+
+TCP test 2:
+Duration: 5 seconds
+Sender throughput: 1.15 Gbit/s
+Receiver throughput: 1.15 Gbit/s
+TCP retransmissions: 1647
+
+UDP test:
+Duration: 10 seconds
+Target bitrate: 10 Mbit/s
+Sender bitrate: 10.0 Mbit/s
+Receiver bitrate: 10.0 Mbit/s
+Receiver jitter: 0.028 ms
+Lost datagrams: 0 of 9274 (0%)
+
+The TCP test traffic was observed inside GTP-U packets
+on N3 between the gNB and UPF.
+
+These are preliminary measurements from a container-based
+lab environment. Additional repetitions and controlled
+impairment tests are required for the final evaluation.
+
+UDP baseline — three repetitions (10 Mbps target, 10 seconds each)
+
+Test 1:
+Receiver bitrate: 10.0 Mbit/s
+Receiver jitter: 0.028 ms
+Lost datagrams: 0/9274 (0%)
+
+Test 2:
+Receiver bitrate: 10.0 Mbit/s
+Receiver jitter: 0.070 ms
+Lost datagrams: 0/9274 (0%)
+
+Test 3:
+Receiver bitrate: 10.0 Mbit/s
+Receiver jitter: 0.046 ms
+Lost datagrams: 0/9274 (0%)
+
+UDP baseline summary:
+All three tests achieved 10.0 Mbit/s with 0% packet loss.
+Mean receiver jitter: approximately 0.048 ms.
+
+TCP baseline — test 3:
+Duration: 5 seconds
+Sender throughput: 1.16 Gbit/s
+Receiver throughput: 1.15 Gbit/s
+TCP retransmissions: 2561
+
+TCP impairment test — 50 ms outgoing delay on UE tunnel:
+Duration: 5.06 seconds (receiver)
+Sender throughput: 17.6 Mbit/s
+Receiver throughput: 16.4 Mbit/s
+TCP retransmissions: 48
+
+UDP impairment test — 50 ms outgoing delay on UE tunnel:
+Duration: 10.05 seconds (receiver)
+Target bitrate: 10 Mbit/s
+Receiver bitrate: 9.95 Mbit/s
+Receiver jitter: 0.028 ms
+Lost datagrams: 0/9274 (0%)
+
+TCP impairment test — 1% configured outgoing packet loss on UE tunnel:
+Duration: 5 seconds
+Sender throughput: 472 Mbit/s
+Receiver throughput: 470 Mbit/s
+TCP retransmissions: 1817
+
+UDP impairment test — 1% configured outgoing packet loss on UE tunnel:
+Duration: 10 seconds
+Target bitrate: 10 Mbit/s
+Receiver bitrate: 9.90 Mbit/s
+Receiver jitter: 0.033 ms
+Lost datagrams: 89/9273 (0.96%)
+
+ICMP baseline — UE to Nginx application server:
+Destination: 172.19.0.20
+Packets transmitted: 20
+Packets received: 20
+Packet loss: 0%
+Minimum RTT: 0.969 ms
+Average RTT: 2.244 ms
+Maximum RTT: 3.607 ms
+RTT mdev: 0.536 ms

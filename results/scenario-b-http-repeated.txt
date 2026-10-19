@@ -1,0 +1,10 @@
+request=1 HTTP 200 connect=0.000752s total=0.001181s size=896B
+request=2 HTTP 200 connect=0.001096s total=0.003801s size=896B
+request=3 HTTP 200 connect=0.000561s total=0.000926s size=896B
+request=4 HTTP 200 connect=0.000748s total=0.001200s size=896B
+request=5 HTTP 200 connect=0.000879s total=0.001344s size=896B
+request=6 HTTP 200 connect=0.000489s total=0.000808s size=896B
+request=7 HTTP 200 connect=0.000635s total=0.000908s size=896B
+request=8 HTTP 200 connect=0.000395s total=0.000785s size=896B
+request=9 HTTP 200 connect=0.000576s total=0.000959s size=896B
+request=10 HTTP 200 connect=0.000495s total=0.000831s size=896B

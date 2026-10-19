@@ -1,0 +1,24 @@
+# Large packet captures — retain locally
+captures/*.pcap
+
+# Temporary editor and backup files
+*.swp
+*.bak
+*.before-*
+*~
+
+# Python-generated files
+__pycache__/
+*.py[cod]
+.venv/
+
+# Secrets and local environment settings
+.env
+.env.*
+!.env.example
+
+# Configuration backups
+*.backup
+
+# Local UE subscriber credentials — do not publish
+config/ue.yaml
